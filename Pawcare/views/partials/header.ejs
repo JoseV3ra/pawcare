@@ -14,6 +14,7 @@
 
       <% if (currentUser) { %>
         <span>Signed in as <%= currentUser.name %></span>
+        <a href="/pets">My Pets</a>
 
         <form action="/logout" method="POST">
           <button type="submit">Logout</button>

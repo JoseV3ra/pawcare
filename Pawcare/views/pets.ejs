@@ -1,0 +1,62 @@
+<%- include("partials/header") %>
+
+<main>
+  <h1>My Pets</h1>
+
+  <% if (error) { %>
+    <p role="alert"><%= error %></p>
+  <% } %>
+
+  <h2>Add a Pet</h2>
+
+  <form action="/pets" method="POST">
+    <div>
+      <label for="name">Pet name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        maxlength="60"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="species">Species</label>
+      <select id="species" name="species" required>
+        <option value="">Choose a species</option>
+        <option value="Dog">Dog</option>
+        <option value="Cat">Cat</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="breed">Breed (optional)</label>
+      <input id="breed" name="breed" type="text" maxlength="80">
+    </div>
+
+    <div>
+      <label for="notes">Grooming notes (optional)</label>
+      <textarea id="notes" name="notes" maxlength="500"></textarea>
+    </div>
+
+    <button type="submit">Add Pet</button>
+  </form>
+
+  <h2>Your Registered Pets</h2>
+
+  <% if (pets.length === 0) { %>
+    <p>You have not added any pets yet.</p>
+  <% } %>
+
+  <% pets.forEach((pet) => { %>
+    <article>
+      <h3><%= pet.name %></h3>
+      <p>Species: <%= pet.species %></p>
+      <p>Breed: <%= pet.breed || "Not provided" %></p>
+      <p>Notes: <%= pet.notes || "None" %></p>
+    </article>
+  <% }); %>
+</main>
+
+<%- include("partials/footer") %>
