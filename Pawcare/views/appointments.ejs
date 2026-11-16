@@ -1,0 +1,92 @@
+<%- include("partials/header") %>
+
+<main>
+  <h1>My Appointments</h1>
+
+  <% if (error) { %>
+    <p role="alert"><%= error %></p>
+  <% } %>
+
+  <% if (pets.length === 0) { %>
+    <p><a href="/pets">Add a pet</a> before booking an appointment.</p>
+  <% } else { %>
+    <h2>Book an Appointment</h2>
+    <p>Every booking reserves one hour. Available daily, 9 AM–5 PM.</p>
+
+    <form action="/appointments" method="POST">
+      <div>
+        <label for="petId">Pet</label>
+        <select id="petId" name="petId" required>
+          <% pets.forEach((pet) => { %>
+            <option value="<%= pet.id %>"><%= pet.name %></option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div>
+        <label for="serviceId">Service</label>
+        <select id="serviceId" name="serviceId" required>
+          <% services.forEach((service) => { %>
+            <option value="<%= service.id %>">
+              <%= service.name %> — $<%= service.price.toFixed(2) %>
+            </option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div>
+        <label for="groomerId">Groomer</label>
+        <select id="groomerId" name="groomerId" required>
+          <% groomers.forEach((groomer) => { %>
+            <option value="<%= groomer.id %>"><%= groomer.name %></option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div>
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" required>
+      </div>
+
+      <div>
+        <label for="hour">Time</label>
+        <select id="hour" name="hour" required>
+          <% for (let hour = 9; hour <= 16; hour++) { %>
+            <option value="<%= hour %>">
+              <%= hour > 12 ? hour - 12 : hour %>:00
+              <%= hour >= 12 ? "PM" : "AM" %>
+            </option>
+          <% } %>
+        </select>
+      </div>
+
+      <button type="submit">Book Appointment</button>
+    </form>
+  <% } %>
+
+  <h2>Your Bookings</h2>
+
+  <% if (appointments.length === 0) { %>
+    <p>You have no appointments yet.</p>
+  <% } %>
+
+  <% appointments.forEach((appointment) => { %>
+    <article>
+      <h3><%= appointment.petName %> — <%= appointment.serviceName %></h3>
+      <p>Groomer: <%= appointment.groomerName %></p>
+      <p>
+        Date: <%= appointment.date %> |
+        Time: <%= appointment.hour %>:00
+      </p>
+      <p>Status: <%= appointment.status %></p>
+
+      <% if (appointment.status === "Scheduled") { %>
+        <form action="/appointments/<%= appointment.id %>/cancel" method="POST">
+          <button type="submit">Cancel Appointment</button>
+        </form>
+      <% } %>
+    </article>
+  <% }); %>
+</main>
+
+<%- include("partials/footer") %>
