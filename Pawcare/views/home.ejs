@@ -1,8 +1,40 @@
 <%- include("partials/header") %>
 
 <main>
-  <h1>Welcome to <%= businessName %></h1>
-  <p>Grooming services to help your pets look and feel their best.</p>
+  <div class="hero">
+    <h1>Welcome to <%= businessName %></h1>
+
+    <p>
+      Simple grooming appointments for happier, healthier pets.
+      Explore our services and schedule your pet's next visit.
+    </p>
+
+    <div class="home-links">
+      <a class="button" href="/services">Explore Services</a>
+
+      <% if (currentUser) { %>
+        <a class="button" href="/appointments">My Appointments</a>
+      <% } else { %>
+        <a class="button" href="/register">Create an Account</a>
+      <% } %>
+    </div>
+  </div>
+
+  <section>
+    <h2>Grooming Made Simple</h2>
+    <p>
+      Add your pet, choose a grooming service, and book an available
+      hourly appointment with a groomer.
+    </p>
+  </section>
+
+  <section>
+    <h2>Our Services</h2>
+    <p>
+      Choose from Bath and Brush, Full Groom, and Nail Trim.
+      Visit our services page for prices and treatment durations.
+    </p>
+  </section>
 </main>
 
 <%- include("partials/footer") %>

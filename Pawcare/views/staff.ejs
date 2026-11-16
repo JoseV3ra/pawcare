@@ -1,0 +1,64 @@
+<%- include("partials/header") %>
+
+<main>
+  <h1>Staff Dashboard</h1>
+
+  <% if (error) { %>
+    <p role="alert"><%= error %></p>
+  <% } %>
+
+  <% if (appointments.length === 0) { %>
+    <p>No appointments have been booked.</p>
+  <% } else { %>
+    <div class="table-container" tabindex="0" role="region" aria-label="Appointments table">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Customer</th>
+          <th scope="col">Pet</th>
+          <th scope="col">Service</th>
+          <th scope="col">Groomer</th>
+          <th scope="col">Date / Time</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% appointments.forEach((appointment) => { %>
+          <tr>
+            <td><%= appointment.customerName %></td>
+            <td><%= appointment.petName %></td>
+            <td><%= appointment.serviceName %></td>
+            <td><%= appointment.groomerName %></td>
+            <td>
+              <%= appointment.date %> /
+              <%= appointment.hour %>:00
+            </td>
+            <td><%= appointment.status %></td>
+            <td>
+              <% if (appointment.status === "Scheduled") { %>
+                <form
+                  action="/staff/appointments/<%= appointment.id %>/status"
+                  method="POST"
+                >
+                  <button name="status" value="Completed" type="submit">
+                    Complete
+                  </button>
+                  <button name="status" value="Canceled" type="submit">
+                    Cancel
+                  </button>
+                </form>
+              <% } else { %>
+                No action available
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+</div>
+  <% } %>
+</main>
+
+<%- include("partials/footer") %>
