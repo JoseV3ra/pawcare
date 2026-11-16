@@ -1,0 +1,61 @@
+<%- include("partials/header") %>
+
+<main>
+  <h1>Create an Account</h1>
+  <p>Register to manage your pets and grooming appointments.</p>
+
+  <% if (error) { %>
+    <p role="alert"><%= error %></p>
+  <% } %>
+
+  <% if (success) { %>
+    <p role="status"><%= success %></p>
+    <a href="/">Return home</a>
+  <% } else { %>
+    <form action="/register" method="POST">
+      <div>
+        <label for="name">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          maxlength="60"
+          autocomplete="name"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          minlength="8"
+          autocomplete="new-password"
+          aria-describedby="password-help"
+          required
+        >
+        <p id="password-help">
+          Use at least 8 characters. Maximum length is 72 bytes.
+        </p>
+      </div>
+
+      <button type="submit">Create Account</button>
+    </form>
+  <% } %>
+</main>
+
+<%- include("partials/footer") %>
