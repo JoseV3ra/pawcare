@@ -28,3 +28,45 @@ exports.register = (req, res) => {
     });
   }
 };
+
+exports.showLogin = (req, res) => {
+    res.render("login", {
+      title: "PawCare | Login",
+      error: null,
+    });
+  };
+  
+  exports.login = (req, res, next) => {
+    let user;
+  
+    try {
+      user = userService.loginUser(req.body.email, req.body.password);
+    } catch (error) {
+      return res.status(401).render("login", {
+        title: "PawCare | Login",
+        error: error.message,
+      });
+    }
+  
+    // Start a fresh session after a successful login.
+    req.session.regenerate((error) => {
+      if (error) return next(error);
+  
+      req.session.userId = user.id;
+  
+      req.session.save((error) => {
+        if (error) return next(error);
+  
+        res.redirect("/");
+      });
+    });
+  };
+  
+  exports.logout = (req, res, next) => {
+    req.session.destroy((error) => {
+      if (error) return next(error);
+  
+      res.clearCookie("connect.sid");
+      res.redirect("/login");
+    });
+  };

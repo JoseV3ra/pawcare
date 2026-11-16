@@ -10,5 +10,8 @@ router.get("/services", pageController.services);
 router.get("/about", pageController.about);
 router.get("/register", userController.showRegister);
 router.post("/register", userController.register);
+router.get("/login", userController.showLogin);
+router.post("/login", userController.login);
+router.post("/logout", userController.logout);
 
 module.exports = router;

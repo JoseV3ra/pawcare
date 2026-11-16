@@ -8,9 +8,19 @@
 <body>
   <header>
     <nav aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/services">Services</a>
-        <a href="/about">About</a>
+      <a href="/">Home</a>
+      <a href="/services">Services</a>
+      <a href="/about">About</a>
+
+      <% if (currentUser) { %>
+        <span>Signed in as <%= currentUser.name %></span>
+
+        <form action="/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
+      <% } else { %>
         <a href="/register">Register</a>
-      </nav>
+        <a href="/login">Login</a>
+      <% } %>
+    </nav>
   </header>
