@@ -1,3 +1,5 @@
+const groomingService = require("../services/groomingService");
+
 exports.home = (req, res) => {
     res.render("home", {
       title: "PawCare | Home",
@@ -6,8 +8,11 @@ exports.home = (req, res) => {
   };
 
   exports.services = (req, res) => {
+    const services = groomingService.getAllServices();
+  
     res.render("services", {
       title: "PawCare | Services",
+      services: services,
     });
   };
   
